@@ -1,0 +1,72 @@
+<!--<app-carousel></app-carousel>-->
+<div class="row container-fluid mt-3 ml-1" >
+  <div class="col-2 test"></div>
+  <div class="card text-center register col-lg-8 " style="background: white !important;">
+    <div class=" text-center mt-2">
+      <h2>Đăng ký</h2>
+    </div>
+    <div class="card-body">
+      <!-- Login-->
+      <form [formGroup]="registerForm" (ngSubmit)="register()">
+        <div class="text-left">
+          <label>Tên đăng nhập</label>
+        </div>
+        <div class="form-group">
+          <input type="text" class="form-control" formControlName="username" id="exampleInputEmail1"
+                 aria-describedby="emailHel"
+                 placeholder="Enter email">
+        </div>
+        <div class="text-left">
+          <label>Mật khẩu</label>
+        </div>
+        <div class="form-group">
+          <input type="password" class="form-control" formControlName="password" id="exampleInputPassword1"
+                 placeholder="Password">
+        </div>
+        <div class="text-left">
+          <label>Nhập lại mật khẩu</label>
+        </div>
+        <div class="form-group">
+          <input type="password" class="form-control" formControlName="confirmPassword" id="exampleInputConfirmPassword1"
+                 placeholder="Confirm Password">
+        </div>
+        <div class="text-left">
+          <label>Tên</label>
+        </div>
+        <div class="form-group">
+          <input type="text" class="form-control" formControlName="firstName" id="exampleInputFirstName"
+                 placeholder="First Name">
+        </div>
+        <div class="text-left">
+          <label>Họ</label>
+        </div>
+        <div class="form-group">
+          <input type="text" class="form-control" formControlName="lastName" id="exampleInputLastName"
+                 placeholder="Last Name">
+        </div>
+        <div class="text-left">
+          <label>Email</label>
+        </div>
+        <div class="form-group">
+          <input type="text" class="form-control" formControlName="email" id="exampleInputEmail"
+                 placeholder="email">
+        </div>
+        <div class="text-left">
+          <label>Số điện thoại</label>
+        </div>
+        <div class="form-group">
+          <input type="text" class="form-control" formControlName="phoneNumber" id="exampleInputPhoneNumber"
+                 placeholder="Phone Number">
+        </div>
+        <div class="text-left">
+          <label>Giới tính</label>
+        </div>
+        <div class="form-group">
+          <input type="text" class="form-control" formControlName="gender" id="exampleInputGender"
+                 placeholder="Gender">
+        </div>
+        <button type="submit" class="btn btn-success nutPhai mr-2">Register</button>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,42 @@
+/* You can add global styles to this file, and also import other style files */
+.register {
+  -webkit-box-shadow: 0px 0px 30px 6px rgba(0, 0, 0, 0.58);
+  -moz-box-shadow: 0px 0px 30px 6px rgba(0, 0, 0, 0.58);
+  box-shadow: 0px 0px 30px 6px rgba(0, 0, 0, 0.58);
+}
+
+.menu {
+  border-radius: 5px;
+}
+
+@import url('https://fonts.googleapis.com/css?family=Gupter|Solway&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+* {
+  font-family: Open Sans;
+}
+
+body {
+  background: #fffafa !important;
+}
+
+
+@media only screen and (max-width: 600px) {
+  .login {
+    display: none !important;
+  }
+  //.slide {
+  //  margin-top: 30px;
+  //}
+  .info {
+    display: none !important;
+  }
+  .navbar {
+    background: black !important;
+  }
+  .slide {
+    margin-top: 55px !important;
+  }
+  .showRegister {
+    display: block !important;
+  }
+}

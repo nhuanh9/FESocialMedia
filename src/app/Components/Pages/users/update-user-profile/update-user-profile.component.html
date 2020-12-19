@@ -1,0 +1,58 @@
+<!--<app-carousel></app-carousel>-->
+<div class="row container-fluid mt-3 ml-1">
+  <div class="col-2 test"></div>
+  <div class="card text-center register col-lg-8 " style="background: white !important;">
+    <div class=" text-center mt-2">
+      <h2>Sửa thông tin cá nhân</h2>
+    </div>
+    <div class="card-body">
+      <!-- Login-->
+      <img src="{{currentUser.imageUrls}}" alt="Image user" width="30%" style="border-radius: 15px">
+      <form [formGroup]="userForm" (ngSubmit)="updateUserProfile()">
+        <div class="text-left">
+          <label>First Name</label>
+        </div>
+        <div class="form-group">
+          <input type="text" class="form-control" formControlName="firstName" id="exampleInputFirstName"
+                 placeholder="First Name" value="{{userFirstName}}">
+        </div>
+        <div class="text-left">
+          <label>Last Name</label>
+        </div>
+        <div class="form-group">
+          <input type="text" class="form-control" formControlName="lastName" id="exampleInputLastName"
+                 placeholder="Last Name" value="{{userLastName}}">
+        </div>
+        <div class="text-left">
+          <label>Email</label>
+        </div>
+        <div class="form-group">
+          <input type="text" class="form-control" formControlName="email" id="exampleInputEmail"
+                 placeholder="email" value="{{userEmail}}">
+        </div>
+        <div class="text-left">
+          <label>Phone Number</label>
+        </div>
+        <div class="form-group">
+          <input type="text" class="form-control" formControlName="phoneNumber" id="exampleInputPhoneNumber"
+                 placeholder="Phone Number" value="{{userPhoneNumber}}">
+        </div>
+        <div class="text-left">
+          <label>Gender</label>
+        </div>
+        <div class="form-group">
+          <input type="text" class="form-control" formControlName="gender" id="exampleInputGender"
+                 placeholder="Gender" value="{{userGender}}">
+        </div>
+        <div class="text-left">
+          <label>Image Link</label>
+        </div>
+        <div class="form-group">
+          <input type="file" class="form-control" (change)="saveImg($event)">
+        </div>
+
+        <button type="submit" class="btn btn-success nutPhai mr-2">Cập nhật</button>
+      </form>
+    </div>
+  </div>
+</div>
