@@ -1,0 +1,40 @@
+<div class="row ml-5 name-house mt-5" style="font-size: 20px">
+
+</div>
+<div class="row ml-5 mr-5 detail">
+  <div class="col-md-5 m-3">
+    <div class="row">
+      <img width="100%" src="{{user.imageUrls}}" class=" mb-1">
+    </div>
+  </div>
+  <div class="col-md-6 ">
+    <div class="info-house m-3">
+      <div class="m-3">
+        <h2>Người dùng: {{user.username}}</h2>
+        <table>
+          <tr>
+            <td><h4>Họ</h4></td><td><h4> : {{user.lastName}}</h4></td>
+          </tr>
+          <tr>
+            <td><h4>Tên</h4></td><td><h4> : {{user.firstName}}</h4></td>
+          </tr>
+          <tr>
+            <td><h4>Số điện thoại</h4></td><td><h4> : {{user.phoneNumber}}</h4></td>
+          </tr>
+          <tr>
+            <td><h4>Email</h4></td><td><h4> : {{user.email}}</h4></td>
+          </tr>
+          <tr>
+            <td><h4>Giới tính</h4></td><td><h4> : {{user.gender}}</h4></td>
+          </tr>
+          <tr *ngIf="user.enabled">
+            <td><h4>Trạng thái</h4></td><td><h4> : Hoạt động</h4></td>
+          </tr>
+          <tr *ngIf="!user.enabled">
+            <td><h4>Trạng thái</h4></td><td><h4> : Khoá</h4></td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

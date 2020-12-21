@@ -19,6 +19,10 @@ export class AdminService {
     return this.http.get<User[]>(API_URL + `/users`);
   }
 
+  getUserById(id: string): Observable<User> {
+    return this.http.get<User>(API_URL + `/users/${id}`);
+  }
+
   block(id: number, user: User): Observable<User> {
     return this.http.put(API_URL + `/users/${id}/block`, user);
   }

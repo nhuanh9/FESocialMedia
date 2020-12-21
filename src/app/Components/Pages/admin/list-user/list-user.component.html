@@ -7,9 +7,7 @@
       <thead>
       <tr>
         <th scope="col">Tên đăng nhập</th>
-        <th scope="col">Họ</th>
         <th scope="col">Tên</th>
-        <th scope="col">Email</th>
         <th scope="col">Số điện thoại</th>
         <th scope="col">Quyền</th>
         <th scope="col">Trạng thái</th>
@@ -17,10 +15,8 @@
       </thead>
       <tbody>
       <tr *ngFor="let user of users">
-        <th scope="row">{{user.username}}</th>
-        <td>{{user.lastName}}</td>
+        <th scope="row"><a [routerLink]="['/admin/users', user.id]">{{user.username}}</a></th>
         <td>{{user.firstName}}</td>
-        <td>{{user.email}}</td>
         <td>{{user.phoneNumber}}</td>
         <td>{{user.roles[0].name}}</td>
         <td *ngIf="user.enabled" style="color: green">Hoạt động</td>

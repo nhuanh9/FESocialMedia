@@ -8,17 +8,24 @@ import {UpdateUserProfileComponent} from '../Components/Pages/users/update-user-
 import {ProfileComponent} from '../Components/Pages/users/profile/profile.component';
 import {NewPasswordComponent} from "../Components/Pages/users/new-password/new-password.component";
 import {ListUserComponent} from "../Components/Pages/admin/list-user/list-user.component";
+import {UserInfoComponent} from "../Components/Pages/admin/user-info/user-info.component";
 const routes: Routes = [
   {
     path: '',
     canActivate: [AuthGuard],
     component: ListUserComponent
+  },
+  {
+    path: 'users/:id',
+    canActivate: [AuthGuard],
+    component: UserInfoComponent
   }
 ];
 
 @NgModule({
   declarations: [
-    ListUserComponent
+    ListUserComponent,
+    UserInfoComponent
   ],
   imports: [
     CommonModule,
