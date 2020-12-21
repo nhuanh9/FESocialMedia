@@ -1,17 +1,40 @@
-<p>list-user works!</p>
-<p>list-user works!</p>
-<p>list-user works!</p>
-<p>list-user works!</p>
-<p>list-user works!</p>
-<p>list-user works!</p>
-<p>list-user works!</p>
-<p>list-user works!</p>
-<p>list-user works!</p>
-<p>list-user works!</p>
-<p>list-user works!</p>
-<p>list-user works!</p>
-<p>list-user works!</p>
-<p>list-user works!</p>
-<p>list-user works!</p>
-<p>list-user works!</p>
-<p>list-user works!</p>
+<div class="row mt-5 mb-5">
+  <div class="container">
+    <div class="row text-center mt-5">
+      <div class="col-12"><h1>Danh sách tài khoản trong hệ thống</h1></div>
+    </div>
+    <table class="table table-hover">
+      <thead>
+      <tr>
+        <th scope="col">Tên đăng nhập</th>
+        <th scope="col">Họ</th>
+        <th scope="col">Tên</th>
+        <th scope="col">Email</th>
+        <th scope="col">Số điện thoại</th>
+        <th scope="col">Quyền</th>
+        <th scope="col">Trạng thái</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let user of users">
+        <th scope="row">{{user.username}}</th>
+        <td>{{user.lastName}}</td>
+        <td>{{user.firstName}}</td>
+        <td>{{user.email}}</td>
+        <td>{{user.phoneNumber}}</td>
+        <td>{{user.roles[0].name}}</td>
+        <td *ngIf="user.enabled" style="color: green">Hoạt động</td>
+        <td *ngIf="!user.enabled" style="color: red">Khoá</td>
+        <td *ngIf="user.enabled">
+          <button class="btn btn-warning mr-1" (click)="blockUser(user.id, user)">Khoá</button>
+          <button class="btn btn-danger">Xoá</button>
+        </td>
+        <td *ngIf="!user.enabled">
+          <button class="btn btn-info mr-1" (click)="unblockUser(user.id, user)">Mở khoá</button>
+          <button class="btn btn-danger">Xoá</button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
