@@ -18,6 +18,7 @@ import { LoginComponent } from './Components/Pages/users/login/login.component';
 import {NgxPaginationModule} from 'ngx-pagination';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { NewPasswordComponent } from './Components/Pages/users/new-password/new-password.component';
+import { ListUserComponent } from './Components/Pages/admin/list-user/list-user.component';
 
 @NgModule({
   declarations: [

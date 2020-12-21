@@ -18,9 +18,11 @@ export class LoginComponent implements OnInit {
     password: new FormControl('')
   });
   returnUrl: string;
+  adminUrl: string;
   error = '';
   loading = false;
   submitted = false;
+
   constructor(private activatedRoute: ActivatedRoute,
               private router: Router,
               private authenticationService: AuthenticationService) {
@@ -31,6 +33,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     this.returnUrl = this.activatedRoute.snapshot.queryParams.returnUrl || '/';
+    this.adminUrl = '/admin'
   }
 
   login() {
@@ -41,7 +44,12 @@ export class LoginComponent implements OnInit {
       .subscribe(
         data => {
           localStorage.setItem('ACCESS_TOKEN', data.accessToken);
-          this.router.navigate([this.returnUrl]);
+          localStorage.setItem('ROLE', data.roles[0].authority);
+          if (data.roles[0].authority == "ROLE_ADMIN") {
+            this.router.navigate([this.adminUrl])
+          } else {
+            this.router.navigate([this.returnUrl]);
+          }
         },
         error => {
           this.error = 'Sai tên đăng nhập hoặc mật khẩu';
