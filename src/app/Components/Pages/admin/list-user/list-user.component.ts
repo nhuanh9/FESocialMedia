@@ -17,6 +17,7 @@ export class ListUserComponent implements OnInit {
   sub: Subscription;
   users: User[];
   currentUsername: string;
+
   constructor(private userService: UserService,
               private router: Router,
               private fb: FormBuilder,
@@ -43,20 +44,28 @@ export class ListUserComponent implements OnInit {
 
   blockUser(id, user) {
     this.adminService.block(id, user).subscribe(next => {
-      alert("Bạn đã khoá thành công tài khoản "+user.username);
+      alert("Bạn đã khoá thành công tài khoản " + user.username);
       this.getAllUsers();
     }, error => {
       console.log(error);
     })
   }
+
   unblockUser(id, user) {
     this.adminService.unblock(id, user).subscribe(next => {
-      alert("Bạn đã mở khoá tài khoản "+user.username);
+      alert("Bạn đã mở khoá tài khoản " + user.username);
       this.getAllUsers();
     }, error => {
       console.log(error);
     })
   }
 
-
+  deleteUser(id) {
+    this.adminService.delete(id).subscribe(next => {
+      alert("Bạn đã mở xoá tài khoản!");
+      this.getAllUsers();
+    }, error => {
+      console.log(error);
+    })
+  }
 }

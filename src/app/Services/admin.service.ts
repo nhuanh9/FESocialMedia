@@ -4,7 +4,7 @@ import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {User} from "../model/user";
 
-const API_URL = environment.apiUrl+`/api/admin`;
+const API_URL = environment.apiUrl + `/api/admin`;
 
 @Injectable({
   providedIn: 'root'
@@ -26,4 +26,9 @@ export class AdminService {
   unblock(id: number, user: User): Observable<User> {
     return this.http.put(API_URL + `/users/${id}/unblock`, user);
   }
+
+  delete(id: number): Observable<User> {
+    return this.http.delete(API_URL + `/users/${id}`);
+  }
+
 }
