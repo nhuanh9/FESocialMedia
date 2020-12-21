@@ -26,12 +26,12 @@
         <td *ngIf="user.enabled" style="color: green">Hoạt động</td>
         <td *ngIf="!user.enabled" style="color: red">Khoá</td>
         <td *ngIf="user.enabled">
-          <button class="btn btn-warning mr-1" (click)="blockUser(user.id, user)">Khoá</button>
-          <button class="btn btn-danger">Xoá</button>
+          <button *ngIf="user.username != currentUsername" class="btn btn-warning mr-1" (click)="blockUser(user.id, user)">Khoá</button>
+          <button *ngIf="user.username != currentUsername"class="btn btn-danger">Xoá</button>
         </td>
         <td *ngIf="!user.enabled">
-          <button class="btn btn-info mr-1" (click)="unblockUser(user.id, user)">Mở khoá</button>
-          <button class="btn btn-danger">Xoá</button>
+          <button *ngIf="user.username != currentUsername"class="btn btn-info mr-1" (click)="unblockUser(user.id, user)">Mở khoá</button>
+          <button *ngIf="user.username != currentUsername"class="btn btn-danger">Xoá</button>
         </td>
       </tr>
       </tbody>

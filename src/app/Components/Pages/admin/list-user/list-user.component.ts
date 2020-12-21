@@ -16,7 +16,7 @@ export class ListUserComponent implements OnInit {
   role: string;
   sub: Subscription;
   users: User[];
-
+  currentUsername: string;
   constructor(private userService: UserService,
               private router: Router,
               private fb: FormBuilder,
@@ -30,6 +30,7 @@ export class ListUserComponent implements OnInit {
     if (this.role == "ROLE_USER") {
       this.router.navigate(['/']);
     }
+    this.currentUsername = localStorage.getItem("USERNAME");
     this.getAllUsers()
   }
 
