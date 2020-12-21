@@ -14,12 +14,6 @@ import {Subscription} from "rxjs";
 export class ListUserComponent implements OnInit {
   role: string;
   sub: Subscription;
-  userFirstName = '';
-  userLastName = '';
-  userGender = '';
-  userPhoneNumber = '';
-  userEmail = '1';
-  arrayPicture = '';
 
   constructor(private userService: UserService,
               private router: Router,
@@ -34,5 +28,7 @@ export class ListUserComponent implements OnInit {
       this.router.navigate(['/']);
     }
   }
+
+
 
 }
