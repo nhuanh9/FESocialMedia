@@ -67,17 +67,13 @@ export class NewPasswordComponent implements OnInit {
 
   changePassword() {
     const user = this.setNewUser();
-    this.userService.newPassword(user, this.currentUser.id, this.currentUserToken.accessToken).subscribe(() => {
-      console.log('Đổi mật khẩu thành công');
+    this.userService.newPassword(user, this.currentUser.id).subscribe(() => {
+      alert('Đổi mật khẩu thành công');
       this.newPasswordForm.reset();
       this.router.navigate(['/']);
     }, err => {
-      console.log(user);
-      console.log(this.currentUser)
-      console.log(this.currentUserToken)
       console.log(err);
     });
-    console.log(user);
   }
 
   private setNewUser() {
