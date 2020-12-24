@@ -1,0 +1,77 @@
+<div class="wrapper">
+  <div class="page-header page-header-xs" data-parallax="true"
+       style="background-image: url('./assets/img/fabio-mangione.jpg');">
+    <div class="filter"></div>
+  </div>
+  <div class="section profile-content">
+    <div class="container">
+      <div class="owner" align="center">
+        <div class="avatar">
+          <img src="./assets/img/joe-gardner-2.jpg" alt="Circle Image" class="img-fluid rounded-circle mb-3">
+        </div>
+        <br>
+        <div class="name">
+          <h4 class="title">{{userFriend.username}}<br/></h4>
+        </div>
+      </div>
+      <!--      <div class="row">-->
+      <!--        <div class="col-md-6 ml-auto mr-auto text-center">-->
+      <!--          <p>An artist of considerable range, Jane Faker — the name taken by Melbourne-raised, Brooklyn-based Nick Murphy — writes, performs and records all of his own music, giving it a warm, intimate feel with a solid groove structure. </p>-->
+      <!--          <br />-->
+      <!--          <button class="btn btn-outline-default btn-round"><i class="fa fa-cog"></i> Settings</button>-->
+      <!--        </div>-->
+      <!--      </div>-->
+      <br/>
+      <div class="nav-tabs-navigation">
+        <div class="nav-tabs-wrapper">
+          <!-- Testimonials -->
+          <section class="testimonials text-center bg-light">
+            <div class="container">
+              <h2 class="mb-5">List Bạn chung</h2>
+
+              <div class="row">
+
+                <div *ngFor="let userFriend of listGeneralFriend" class="col-lg-3">
+                  <div class="testimonial-item mx-auto mb-5 mb-lg-0">
+                    <img class="img-fluid rounded-circle mb-3" src="./assets/img/joe-gardner-2.jpg" alt="">
+                    <h5><a href="/user">{{userFriend.username}}</a></h5>
+                    <p class="font-weight-light mb-0">{{userFriend.email}}</p>
+                    <br>
+                    <button type="button" (click)="deleteFriend(userFriend.id)" class="btn btn-success">Huỷ kết bạn
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <h2 class="mb-5">List bạn bè của bạn</h2>
+
+              <div class="row">
+
+                <div *ngFor="let userFriend2 of listFriendOfFriend" class="col-lg-3">
+                  <div class="testimonial-item mx-auto mb-5 mb-lg-0">
+                    <img class="img-fluid rounded-circle mb-3" src="./assets/img/joe-gardner-2.jpg" alt="">
+                    <h5><a href="/user">{{userFriend2.username}}</a></h5>
+                    <p class="font-weight-light mb-0">{{userFriend2.email}}</p>
+                    <br>
+                    <div *ngIf="checkFriend(userFriend2)">
+                      <button type="button" (click)="deleteFriend(userFriend2.id)" class="btn btn-success">Huỷ kết bạn
+                      </button>
+                    </div>
+                    <div *ngIf="!checkFriend(userFriend2)">
+                      <button type="button" (click)="addFriend(userFriend2.id)" class="btn btn-success">kết bạn
+                      </button>
+                    </div>
+
+
+                  </div>
+                </div>
+              </div>
+
+
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

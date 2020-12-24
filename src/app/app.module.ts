@@ -18,6 +18,9 @@ import { LoginComponent } from './Components/Pages/users/login/login.component';
 import {NgxPaginationModule} from 'ngx-pagination';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { NewPasswordComponent } from './Components/Pages/users/new-password/new-password.component';
+import { AllFriendComponent } from './Components/Pages/friend/all-friend/all-friend.component';
+import { GeneralFriendsComponent } from './Components/Pages/friend/general-friends/general-friends.component';
+import { PostComponent } from './Components/Pages/post/post.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +31,10 @@ import { NewPasswordComponent } from './Components/Pages/users/new-password/new-
     RegisterComponent,
     CarouselComponent,
     FooterComponent,
-    LoginComponent
+    LoginComponent,
+    AllFriendComponent,
+    GeneralFriendsComponent,
+    PostComponent
   ],
   imports: [
     BrowserModule,
