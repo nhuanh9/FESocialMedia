@@ -20,6 +20,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { NewPasswordComponent } from './Components/Pages/users/new-password/new-password.component';
 import { ListUserComponent } from './Components/Pages/admin/list-user/list-user.component';
 import { UserInfoComponent } from './Components/Pages/admin/user-info/user-info.component';
+import { UpdateUserInfoComponent } from './Components/Pages/admin/update-user-info/update-user-info.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,6 @@ import { UserInfoComponent } from './Components/Pages/admin/user-info/user-info.
     CarouselComponent,
     FooterComponent,
     LoginComponent,
-
   ],
   imports: [
     BrowserModule,

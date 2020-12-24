@@ -29,6 +29,7 @@
           </button>
           <button *ngIf="user.username != currentUsername" class="btn btn-danger" (click)="deleteUser(user.id)">Xoá
           </button>
+          <a [routerLink]="['/admin/update-user-profile',user.id]" class="btn btn-secondary ml-1">Sửa</a>
         </td>
         <td *ngIf="!user.enabled">
           <button *ngIf="user.username != currentUsername" class="btn btn-info mr-1"
@@ -36,6 +37,7 @@
           </button>
           <button *ngIf="user.username != currentUsername" class="btn btn-danger" (click)="deleteUser(user.id)">Xoá
           </button>
+          <a [routerLink]="['/admin/update-user-profile',user.id]" class="btn btn-secondary ml-1">Sửa</a>
         </td>
       </tr>
       </tbody>
