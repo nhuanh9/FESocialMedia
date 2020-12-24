@@ -14,7 +14,7 @@ import {HttpClientModule} from '@angular/common/http';
 import {environment} from '../environments/environment';
 import {AngularFireModule} from '@angular/fire';
 import {AngularFireDatabaseModule} from '@angular/fire/database';
-import { LoginComponent } from './Components/Pages/users/login/login.component'
+import { LoginComponent } from './Components/Pages/users/login/login.component';
 import {NgxPaginationModule} from 'ngx-pagination';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { NewPasswordComponent } from './Components/Pages/users/new-password/new-password.component';
@@ -22,6 +22,9 @@ import { ListUserComponent } from './Components/Pages/admin/list-user/list-user.
 import { UserInfoComponent } from './Components/Pages/admin/user-info/user-info.component';
 import { UpdateUserInfoComponent } from './Components/Pages/admin/update-user-info/update-user-info.component';
 import { AddUserComponent } from './Components/Pages/admin/add-user/add-user.component';
+import { AllFriendComponent } from './Components/Pages/friend/all-friend/all-friend.component';
+import { GeneralFriendsComponent } from './Components/Pages/friend/general-friends/general-friends.component';
+import { PostComponent } from './Components/Pages/post/post.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +35,10 @@ import { AddUserComponent } from './Components/Pages/admin/add-user/add-user.com
     RegisterComponent,
     CarouselComponent,
     FooterComponent,
-    LoginComponent
+    LoginComponent,
+    AllFriendComponent,
+    GeneralFriendsComponent,
+    PostComponent
   ],
   imports: [
     BrowserModule,
