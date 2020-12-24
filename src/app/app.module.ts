@@ -14,7 +14,7 @@ import {HttpClientModule} from '@angular/common/http';
 import {environment} from '../environments/environment';
 import {AngularFireModule} from '@angular/fire';
 import {AngularFireDatabaseModule} from '@angular/fire/database';
-import { LoginComponent } from './Components/Pages/users/login/login.component';
+import { LoginComponent } from './Components/Pages/users/login/login.component'
 import {NgxPaginationModule} from 'ngx-pagination';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { NewPasswordComponent } from './Components/Pages/users/new-password/new-password.component';
@@ -31,6 +31,7 @@ import { UserInfoComponent } from './Components/Pages/admin/user-info/user-info.
     CarouselComponent,
     FooterComponent,
     LoginComponent,
+
   ],
   imports: [
     BrowserModule,

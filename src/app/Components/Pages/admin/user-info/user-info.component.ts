@@ -27,6 +27,11 @@ export class UserInfoComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.role = localStorage.getItem("ROLE");
+    if (this.role == "ROLE_USER") {
+      alert("Bạn không có quyền!")
+      this.router.navigate(['/']);
+    }
     this.getUser();
   }
 

@@ -51,9 +51,10 @@ export class LoginComponent implements OnInit {
           } else {
             this.router.navigate([this.returnUrl]);
           }
+
         },
         error => {
-          this.error = 'Sai tên đăng nhập hoặc mật khẩu';
+          alert("Tài khoản của bạn đã bị khoá");
           this.loading = false;
         });
   }
