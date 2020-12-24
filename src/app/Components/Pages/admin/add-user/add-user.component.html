@@ -1,57 +1,71 @@
 <!--<app-carousel></app-carousel>-->
-<div class="row container-fluid mt-5 ml-1">
+<div class="row container-fluid mt-5 ml-1" >
   <div class="col-2 test"></div>
   <div class="card text-center register col-lg-8 " style="background: white !important;">
     <div class=" text-center mt-3">
-      <h2>Sửa thông tin của {{currentUser.username}}</h2>
+      <h2>Thêm mới người dùng</h2>
     </div>
     <div class="card-body">
       <!-- Login-->
-      <img src="{{currentUser.imageUrls}}" alt="Image user" width="30%" style="border-radius: 15px">
-      <form [formGroup]="userForm" (ngSubmit)="updateUserProfile()">
+      <form [formGroup]="registerForm" (ngSubmit)="register()">
+        <div class="text-left">
+          <label>Tên đăng nhập</label>
+        </div>
+        <div class="form-group">
+          <input type="text" class="form-control" formControlName="username" id="exampleInputEmail1"
+                 aria-describedby="emailHel"
+                 placeholder="Tên đăng nhập">
+        </div>
+        <div class="text-left">
+          <label>Mật khẩu</label>
+        </div>
+        <div class="form-group">
+          <input type="password" class="form-control" formControlName="password" id="exampleInputPassword1"
+                 placeholder="Mật khẩu">
+        </div>
+        <div class="text-left">
+          <label>Nhập lại mật khẩu</label>
+        </div>
+        <div class="form-group">
+          <input type="password" class="form-control" formControlName="confirmPassword" id="exampleInputConfirmPassword1"
+                 placeholder="Nhập lại mật khẩu">
+        </div>
         <div class="text-left">
           <label>Tên</label>
         </div>
         <div class="form-group">
           <input type="text" class="form-control" formControlName="firstName" id="exampleInputFirstName"
-                 placeholder="Tên" value="{{userFirstName}}">
+                 placeholder="Tên">
         </div>
         <div class="text-left">
           <label>Họ</label>
         </div>
         <div class="form-group">
           <input type="text" class="form-control" formControlName="lastName" id="exampleInputLastName"
-                 placeholder="Họ" value="{{userLastName}}">
+                 placeholder="Họ">
         </div>
         <div class="text-left">
           <label>Email</label>
         </div>
         <div class="form-group">
           <input type="text" class="form-control" formControlName="email" id="exampleInputEmail"
-                 placeholder="Email" value="{{userEmail}}">
+                 placeholder="Email">
         </div>
         <div class="text-left">
           <label>Số điện thoại</label>
         </div>
         <div class="form-group">
           <input type="text" class="form-control" formControlName="phoneNumber" id="exampleInputPhoneNumber"
-                 placeholder="Số điện thoại" value="{{userPhoneNumber}}">
+                 placeholder="Số điện thoại">
         </div>
         <div class="text-left">
           <label>Giới tính</label>
         </div>
         <div class="form-group">
           <input type="text" class="form-control" formControlName="gender" id="exampleInputGender"
-                 placeholder="Giới tính" value="{{userGender}}">
+                 placeholder="Giới tinh">
         </div>
-        <div class="text-left">
-          <label>Ảnh</label>
-        </div>
-        <div class="form-group">
-          <input type="file" class="form-control" (change)="saveImg($event)">
-        </div>
-
-        <button type="submit" class="btn btn-success nutPhai mr-2">Cập nhật</button>
+        <button type="submit" class="btn btn-success nutPhai mr-2">Thêm</button>
       </form>
     </div>
   </div>

@@ -21,6 +21,7 @@ import { NewPasswordComponent } from './Components/Pages/users/new-password/new-
 import { ListUserComponent } from './Components/Pages/admin/list-user/list-user.component';
 import { UserInfoComponent } from './Components/Pages/admin/user-info/user-info.component';
 import { UpdateUserInfoComponent } from './Components/Pages/admin/update-user-info/update-user-info.component';
+import { AddUserComponent } from './Components/Pages/admin/add-user/add-user.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,7 @@ import { UpdateUserInfoComponent } from './Components/Pages/admin/update-user-in
     RegisterComponent,
     CarouselComponent,
     FooterComponent,
-    LoginComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
