@@ -6,6 +6,7 @@ import {ActivatedRoute, ParamMap, Router} from "@angular/router";
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {AngularFireDatabase} from "@angular/fire/database";
 import * as firebase from "firebase";
+import {Role} from "../../../../model/role";
 
 @Component({
   selector: 'app-update-user-info',
@@ -21,7 +22,7 @@ export class UpdateUserInfoComponent implements OnInit {
   userPhoneNumber = '';
   userEmail = '1';
   arrayPicture = '';
-
+  role: string;
   constructor(private userService: UserService,
               private router: Router,
               private fb: FormBuilder,
@@ -38,6 +39,11 @@ export class UpdateUserInfoComponent implements OnInit {
   });
 
   ngOnInit() {
+    this.role = localStorage.getItem("ROLE");
+    if (this.role == "ROLE_USER") {
+      alert("Bạn không có quyền!")
+      this.router.navigate(['/']);
+    }
     this.currentUser = {
       id: 1,
       firstName: 'a',

@@ -54,7 +54,7 @@ export class LoginComponent implements OnInit {
 
         },
         error => {
-          alert("Tài khoản của bạn đã bị khoá");
+          alert("Tài khoản của bạn đã bị khoá hoặc sai mật khẩu!");
           this.loading = false;
         });
   }
