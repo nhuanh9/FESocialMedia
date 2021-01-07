@@ -7,6 +7,7 @@ import {AuthGuard} from './helper/auth-guard';
 import {AllFriendComponent} from './Components/Pages/friend/all-friend/all-friend.component';
 import {GeneralFriendsComponent} from './Components/Pages/friend/general-friends/general-friends.component';
 import {PostComponent} from './Components/Pages/post/post.component';
+import {TestComponent} from './test/test.component';
 
 
 const routes: Routes = [
@@ -25,6 +26,10 @@ const routes: Routes = [
   {
     path: 'post',
     component: PostComponent
+  },
+  {
+    path: 'test',
+    component: TestComponent
   },
   {
     path: 'generalfriend',
