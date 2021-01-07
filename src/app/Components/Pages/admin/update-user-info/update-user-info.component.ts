@@ -30,7 +30,8 @@ export class UpdateUserInfoComponent implements OnInit {
               private activatedRoute: ActivatedRoute) {
   }
 
-  userForm: FormGroup = this.fb.group({
+  userForm: FormGroup = this.fb
+    .group({
     firstName: new FormControl('', [Validators.required]),
     lastName: new FormControl('', [Validators.required]),
     gender: new FormControl('', Validators.required),
