@@ -4,7 +4,6 @@ import {UserService} from '../../../../Services/user.service';
 import {ActivatedRoute, ParamMap, Router} from '@angular/router';
 import {User} from '../../../../model/user';
 import {Subscription} from 'rxjs';
-import {error} from 'util';
 import * as firebase from 'firebase';
 import {AngularFireDatabase} from '@angular/fire/database';
 
@@ -44,7 +43,7 @@ export class UpdateUserProfileComponent implements OnInit {
       firstName: 'a',
       lastName: 'b',
       imageUrls: ''
-    }
+    };
     this.getUserProfile();
   }
 

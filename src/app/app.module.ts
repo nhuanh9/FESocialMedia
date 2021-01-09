@@ -25,6 +25,7 @@ import { AddUserComponent } from './Components/Pages/admin/add-user/add-user.com
 import { AllFriendComponent } from './Components/Pages/friend/all-friend/all-friend.component';
 import { GeneralFriendsComponent } from './Components/Pages/friend/general-friends/general-friends.component';
 import { PostComponent } from './Components/Pages/post/post.component';
+import { TestComponent } from './test/test.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { PostComponent } from './Components/Pages/post/post.component';
     LoginComponent,
     AllFriendComponent,
     GeneralFriendsComponent,
-    PostComponent
+    PostComponent,
+    TestComponent
   ],
   imports: [
     BrowserModule,
