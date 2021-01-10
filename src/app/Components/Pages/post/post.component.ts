@@ -5,6 +5,14 @@ import {Post} from '../../../model/post';
 import * as firebase from 'firebase';
 import {AngularFireDatabase} from '@angular/fire/database';
 import {Images} from '../../../model/images';
+import {PostLikeService} from "../../../Services/post-like.service";
+import {UserService} from "../../../Services/user.service";
+import {ActivatedRoute, ParamMap, Router} from "@angular/router";
+import {FormBuilder} from "@angular/forms";
+import {Subscription} from "rxjs";
+import {LikePost} from "../../../model/like-post";
+import {CurrentUserLikePost} from "../../../model/CurrentUserLikePost";
+
 declare var $: any;
 
 @Component({
@@ -14,16 +22,24 @@ declare var $: any;
 })
 export class PostComponent implements OnInit {
   listPost: Post[];
+  listCurrentUserLikePost: CurrentUserLikePost[];
   post: Post;
   user: User;
-  images: Images;
-  listImages: Images[];
   statusPost: number;
   contentPost: string;
   arrayPicture = '';
+  currentUser: User;
+  sub: Subscription;
+  listLikePost: LikePost[];
+  allLike: LikePost[];
 
   constructor(private http: HttpClient,
-              private db: AngularFireDatabase,) {
+              private db: AngularFireDatabase,
+              private postLikeService: PostLikeService,
+              private userService: UserService,
+              private router: Router,
+              private fb: FormBuilder,
+              private activatedRoute: ActivatedRoute,) {
   }
 
   ngOnInit() {
@@ -32,13 +48,36 @@ export class PostComponent implements OnInit {
   }
 
   getAllPost() {
+
+    this.listCurrentUserLikePost = [];
     this.user = JSON.parse(localStorage.getItem('currentUser'));
     const url = 'http://localhost:8080/api/allPost';
-    this.http.get<Post[]>(url).subscribe((resJson) => {
-      this.listPost = resJson;
-      console.log('this.listPost');
-      console.log(this.listPost);
-      this.listPost.reverse();
+    const url1 = 'http://localhost:8080/users/' + this.user.id;
+    this.http.get<User>(url1).subscribe((result) => {
+      this.currentUser = result;
+      this.http.get<Post[]>(url).subscribe((resJson) => {
+        this.listPost = resJson;
+        this.listPost.reverse();
+        this.postLikeService.getAll().subscribe(value => {
+          this.allLike = value;
+          console.log(value)
+          for (let i = 0; i < this.listPost.length; i++) {
+            let currPost: CurrentUserLikePost = {
+              user: this.currentUser,
+              post: this.listPost[i],
+            }
+            for (let j = 0; j < this.allLike.length; j++) {
+              if (this.allLike[j].user.id == this.currentUser.id
+                && this.allLike[j].postEntity.id == this.listPost[i].id
+                && this.allLike[j].liked)
+                currPost.is_liked = true;
+            }
+            this.listCurrentUserLikePost.push(currPost);
+          }
+          console.log(this.listCurrentUserLikePost);
+        })
+
+      });
     });
   }
 
@@ -52,17 +91,37 @@ export class PostComponent implements OnInit {
   }
 
   savePost() {
-    this.post = {id: null, createAt: null, notification: null, content: this.contentPost, status: this.statusPost, user: null, postIdShear: null, imgs: this.arrayPicture};
+    this.post = {
+      id: null,
+      createAt: null,
+      notification: null,
+      content: this.contentPost,
+      status: this.statusPost,
+      user: null,
+      postIdShear: null,
+      imgs: this.arrayPicture
+    };
     const url = 'http://localhost:8080/api/addPost/' + this.user.id;
     console.log(this.post);
     this.http.post(url, this.post).subscribe((resJson) => {
       alert('create thành công');
+      this.getAllPost();
     }, error => {
       alert('create lỗi');
     });
   }
+
   updatePost(id) {
-    this.post = {id: id, createAt: null, notification: null, content: this.contentPost, status: this.statusPost, user: null, postIdShear: null, imgs: this.arrayPicture};
+    this.post = {
+      id: id,
+      createAt: null,
+      notification: null,
+      content: this.contentPost,
+      status: this.statusPost,
+      user: null,
+      postIdShear: null,
+      imgs: this.arrayPicture
+    };
     const url = 'http://localhost:8080/api/editPost/' + this.user.id;
     console.log(this.post);
     this.http.post(url, this.post).subscribe((resJson) => {
@@ -72,8 +131,28 @@ export class PostComponent implements OnInit {
     });
   }
 
+  getAllLikesByPostId(id) {
+    const url = 'http://localhost:8080/api/posts/' + id + '/post-likes';
+    this.http.get<LikePost[]>(url).subscribe(value => {
+      this.listLikePost = value;
+      let str = 'Người dùng đã thích bài viết: ';
+      for (let j = 0; j < this.listLikePost.length; j++) {
+        str += this.listLikePost[j].user.username;
+      }
+    })
+  }
+
   updatePostAndImg(idPost, idImg) {
-    this.post = {id: idPost, createAt: null, notification: null, content: this.contentPost, status: this.statusPost, user: null, postIdShear: null, imgs: this.arrayPicture};
+    this.post = {
+      id: idPost,
+      createAt: null,
+      notification: null,
+      content: this.contentPost,
+      status: this.statusPost,
+      user: null,
+      postIdShear: null,
+      imgs: this.arrayPicture
+    };
     const url = 'http://localhost:8080/api/editPostAndImg/' + idImg;
     console.log(idImg);
     this.http.post(url, this.post).subscribe((resJson) => {
@@ -106,4 +185,45 @@ export class PostComponent implements OnInit {
   showUpdatePost = (id) => {
     $('#myModal' + id).modal('show');
   }
+
+  like(id) {
+    const url1 = 'http://localhost:8080/users/' + this.user.id;
+    this.http.get<User>(url1).subscribe((result) => {
+      const url = 'http://localhost:8080/api/findPostById/' + id;
+      this.http.get<LikePost>(url).subscribe(value => {
+        let like: LikePost = {
+          user: result,
+          postEntity: value,
+        }
+        this.postLikeService.like(like).subscribe(() => {
+          // alert("Liked");
+          this.getAllPost();
+        }, error => {
+          console.log(error);
+        })
+      });
+    });
+
+  }
+
+  unlike(id) {
+    const url1 = 'http://localhost:8080/users/' + this.user.id;
+    this.http.get<User>(url1).subscribe((result) => {
+      const url = 'http://localhost:8080/api/findPostById/' + id;
+      this.http.get<LikePost>(url).subscribe(value => {
+        let like: LikePost = {
+          user: result,
+          postEntity: value,
+        }
+        this.postLikeService.unlike(like).subscribe(() => {
+          // alert("Liked");
+          this.getAllPost();
+        }, error => {
+          console.log(error);
+        })
+      });
+    });
+
+  }
+
 }

@@ -24,7 +24,7 @@ const routes: Routes = [
     component: AllFriendComponent
   },
   {
-    path: 'post',
+    path: '',
     component: PostComponent
   },
   {

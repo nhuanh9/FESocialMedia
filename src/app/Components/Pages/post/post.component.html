@@ -1,166 +1,182 @@
 <!-- Container (The Band Section) -->
-<div id="band" class="container text-center mt-5" >
+<div id="band" class="container text-center mt-5">
   <h3>THE BAND</h3>
   <p><em>We love music!</em></p>
-  <p>We have created a fictional band website. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <!-- Theme Made By www.w3schools.com - No Copyright -->
-  <title>Bootstrap Theme The Band</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css">
-  <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" type="text/css">
+  <p>We have created a fictional band website. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+    laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+    cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia
+    deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+    commodo consequat.</p>
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+    <!-- Theme Made By www.w3schools.com - No Copyright -->
+    <title>Bootstrap Theme The Band</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" type="text/css">
 
-  <style>
-    body {
-      font: 400 15px/1.8 Lato, sans-serif;
-      color: black;
-    }
-  </style>
-</head>
-<body style="margin-top: 100px">
-<div id="band" class="container text-center">
-  <h3>Create Post</h3>
-  <p><em>how do you feel today!</em></p>
-  <div class="bg-light p-2">
-    <div class="d-flex flex-row align-items-start"><img class="rounded-circle"
-                                                        src="{{user.imageUrls}}"
-                                                        width="40" style="margin-top: 20px">
-      <textarea class="form-control ml-1 shadow-none textarea" [(ngModel)]="contentPost"
-                style="height: 70px"></textarea></div>
-    <div class="row">
+    <style>
+      body {
+        font: 400 15px/1.8 Lato, sans-serif;
+        color: black;
+      }
+    </style>
+  </head>
+  <body style="margin-top: 100px">
+  <div id="band" class="container text-center">
+    <h3>Create Post</h3>
+    <p><em>how do you feel today!</em></p>
+    <div class="bg-light p-2">
+      <div class="d-flex flex-row align-items-start"><img class="rounded-circle"
+                                                          src="{{user.imageUrls}}"
+                                                          width="40" style="margin-top: 20px">
+        <textarea class="form-control ml-1 shadow-none textarea" [(ngModel)]="contentPost"
+                  style="height: 70px"></textarea></div>
+      <div class="row">
 
-      <div class="col col-3 mt-2 text-left">
-        <select id="statusPost" class="form-control select2 select2-hidden-accessible" style="width: 100%;"
-                tabindex="-1"
-                aria-hidden="true" [(ngModel)]="statusPost">
-          <option selected="selected" value="1">công khai</option>
-          <option value="0">mình tôi</option>
+        <div class="col col-3 mt-2 text-left">
+          <select id="statusPost" class="form-control select2 select2-hidden-accessible" style="width: 100%;"
+                  tabindex="-1"
+                  aria-hidden="true" [(ngModel)]="statusPost">
+            <option selected="selected" value="1">công khai</option>
+            <option value="0">mình tôi</option>
 
-        </select>
+          </select>
 
-      </div>
-      <div class="col col-4 mt-2 text-right">
-        <div class="form-group">
-          <input type="file" class="form-control" (change)="saveImg($event)">
         </div>
-
-      </div>
-      <div class="col col-8 mt-2 text-center">
-        <img src="{{arrayPicture}}" width="400">
-      </div>
-    </div>
-    <div class="mt-2 text-center">
-      <button class="btn btn-primary btn-sm shadow-none" type="button" (click)="savePost()">Post</button>
-      <button class="btn btn-outline-primary btn-sm ml-1 shadow-none" type="button">Cancel</button>
-    </div>
-  </div>
-  <br>
-</div>
-
-<div *ngFor="let post of listPost" class="d-flex justify-content-center row">
-  <div class="col-md-8">
-    <div class="d-flex flex-column comment-section">
-      <div class="bg-white p-2">
-        <div class="d-flex flex-row user-info">
-          <div>
-            <img class="rounded-circle" src="{{post.user.imageUrls}}" width="40">
+        <div class="col col-4 mt-2 text-right">
+          <div class="form-group">
+            <input type="file" class="form-control" (change)="saveImg($event)">
           </div>
-          <div class="d-flex flex-column justify-content-start ml-2"><span
-            class="d-block font-weight-bold name">{{post.user.username}}</span><span
-            class="date text-black-50">{{post.createAt}}</span></div>
-        </div>
-        <div class="mt-2">
-          <p class="comment-text">{{post.content}}.</p>
-        </div>
-        <div *ngIf="post.imgs.length != 0">
-          <img src="{{post.imgs[0].linkImg}}" alt="Paris" width="550" height="300">
-        </div>
 
+        </div>
+        <div class="col col-8 mt-2 text-center">
+          <img src="{{arrayPicture}}" width="400">
+        </div>
       </div>
-      <div class="bg-white">
-        <div class="d-flex flex-row fs-12">
-          <div class="like p-2 cursor"><i class="fa fa-thumbs-o-up"></i><span class="ml-1">Like</span></div>
-          <div class="like p-2 cursor"><i class="fa fa-commenting-o"></i><span class="ml-1">Comment</span></div>
-          <div class="like p-2 cursor"><i class="fa fa-share"></i><span class="ml-1">Share</span></div>
+      <div class="mt-2 text-center">
+        <button class="btn btn-primary btn-sm shadow-none" type="button" (click)="savePost()">Post</button>
+        <button class="btn btn-outline-primary btn-sm ml-1 shadow-none" type="button">Cancel</button>
+      </div>
+    </div>
+    <br>
+  </div>
 
-          <div *ngIf="post.user.id == user.id">
-            <button type="button" class="btn btn-light" data-toggle="modal" (click)="showUpdatePost(post.id)">edit</button>
+  <div *ngFor="let postCurrent of listCurrentUserLikePost" class="d-flex justify-content-center row">
+    <div class="col-md-8">
+      <div class="d-flex flex-column comment-section">
+        <div class="bg-white p-2">
+          <div class="d-flex flex-row user-info">
+            <div>
+              <img class="rounded-circle" src="{{postCurrent.user.imageUrls}}" width="40">
+            </div>
+            <div class="d-flex flex-column justify-content-start ml-2"><span
+              class="d-block font-weight-bold name">{{postCurrent.user.username}}</span><span
+              class="date text-black-50">{{postCurrent.post.createAt}}</span></div>
+          </div>
+          <div class="mt-2">
+            <p class="comment-text">{{postCurrent.post.content}}.</p>
+          </div>
+          <div *ngIf="postCurrent.post.imgs.length != 0">
+            <img src="{{postCurrent.post.imgs[0].linkImg}}" alt="Paris" width="550" height="300">
+          </div>
+
+        </div>
+        <div class="bg-white">
+          <div class="d-flex flex-row fs-12">
+            <div class="like p-2 cursor">
+              <i *ngIf="!postCurrent.is_liked" (click)="like(postCurrent.post.id)"  class="fa fa-thumbs-o-up"></i>
+              <i *ngIf="postCurrent.is_liked" (click)="unlike(postCurrent.post.id)" class="fa fa-thumbs-o-down"></i>
+              <span class="ml-1" (click)="getAllLikesByPostId(postCurrent.post.id)">{{postCurrent.post.likes}}
+                Likes</span>
+            </div>
+            <div class="like p-2 cursor"><i class="fa fa-commenting-o"></i><span class="ml-1">Comment</span></div>
+            <div class="like p-2 cursor"><i class="fa fa-share"></i><span class="ml-1">Share</span></div>
+
+            <div *ngIf="postCurrent.user.id == user.id">
+              <button type="button" class="btn btn-light" data-toggle="modal"
+                      (click)="showUpdatePost(postCurrent.post.id)">edit
+              </button>
 
 
+              <!-- Modal -->
+              <div class="modal fade" id="myModal{{postCurrent.post.id}}" role="dialog">
+                <div class="modal-dialog modal-lg">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h4 class="modal-title">Edit Post</h4>
+                      <button type="button" class="close" data-dismiss="modal">&times;</button>
 
-          <!-- Modal -->
-            <div class="modal fade" id="myModal{{post.id}}" role="dialog">
-            <div class="modal-dialog modal-lg">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h4 class="modal-title">Edit Post</h4>
-                  <button type="button" class="close" data-dismiss="modal">&times;</button>
-
-                </div>
-                <div class="modal-body">
-                  <textarea class="form-control ml-1 shadow-none textarea" [(ngModel)]="contentPost" [value]="post.content" style="height: 70px"></textarea>
-                <div class="row">
-
-                  <div class="col col-3 mt-2 text-left">
-                    <select class="form-control select2 select2-hidden-accessible" style="width: 100%;"
-                            tabindex="-1"
-                            aria-hidden="true" [(ngModel)]="statusPost" [value]="post.status">
-                      <option selected="selected" value="1">công khai</option>
-                      <option value="0">mình tôi</option>
-
-                    </select>
-
-                  </div>
-                  <div class="col col-4 mt-2 text-right">
-                    <div class="form-group">
-                      <input type="file" class="form-control" (change)="saveImg($event)">
                     </div>
+                    <div class="modal-body">
+                      <textarea class="form-control ml-1 shadow-none textarea" [(ngModel)]="contentPost"
+                                [value]="postCurrent.post.content" style="height: 70px"></textarea>
+                      <div class="row">
 
-                  </div>
-                  <div class="col col-8 mt-2 text-center">
-                    <div *ngIf="post.imgs.length != 0 && arrayPicture == ''">
-                    <img src="{{post.imgs[0].linkImg}}" width="400">
+                        <div class="col col-3 mt-2 text-left">
+                          <select class="form-control select2 select2-hidden-accessible" style="width: 100%;"
+                                  tabindex="-1"
+                                  aria-hidden="true" [(ngModel)]="statusPost" [value]="postCurrent.post.status">
+                            <option selected="selected" value="1">công khai</option>
+                            <option value="0">mình tôi</option>
+
+                          </select>
+
+                        </div>
+                        <div class="col col-4 mt-2 text-right">
+                          <div class="form-group">
+                            <input type="file" class="form-control" (change)="saveImg($event)">
+                          </div>
+
+                        </div>
+                        <div class="col col-8 mt-2 text-center">
+                          <div *ngIf="postCurrent.post.imgs.length != 0 && arrayPicture == ''">
+                            <img src="{{postCurrent.post.imgs[0].linkImg}}" width="400">
+                          </div>
+                          <div *ngIf="arrayPicture != ''">
+                            <img src="{{arrayPicture}}" width="400">
+                          </div>
+                        </div>
+                      </div>
                     </div>
-                    <div *ngIf="arrayPicture != ''">
-                    <img src="{{arrayPicture}}" width="400">
+                    <div class="modal-footer">
+                      <div *ngIf="postCurrent.post.imgs.length != 0">
+                        <button type="button" class="btn btn-default"
+                                (click)="updatePostAndImg(postCurrent.post.id,postCurrent.post.imgs[0].id)">Update
+                        </button>
+                      </div>
+                      <div *ngIf="postCurrent.post.imgs.length == 0">
+                        <button type="button" class="btn btn-default" (click)="updatePost(postCurrent.post.id)">Update
+                        </button>
+                      </div>
+                      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                     </div>
                   </div>
-                </div>
-                </div>
-                <div class="modal-footer">
-                  <div *ngIf="post.imgs.length != 0">
-                  <button type="button" class="btn btn-default" (click)="updatePostAndImg(post.id,post.imgs[0].id)">Update</button>
-                  </div>
-                  <div *ngIf="post.imgs.length == 0">
-                    <button type="button" class="btn btn-default" (click)="updatePost(post.id)">Update</button>
-                  </div>
-                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 </div>
               </div>
             </div>
-          </div>
-          </div>
 
+          </div>
         </div>
-      </div>
-      <div class="bg-light p-2">
-        <div class="d-flex flex-row align-items-start"><img class="rounded-circle"
-                                                            src="{{user.imageUrls}}"
-                                                            width="40"><textarea
-          class="form-control ml-1 shadow-none textarea"></textarea></div>
-        <div class="mt-2 text-right">
-          <button class="btn btn-primary btn-sm shadow-none" type="button">Post comment</button>
-          <button class="btn btn-outline-primary btn-sm ml-1 shadow-none" type="button">Cancel</button>
+        <div class="bg-light p-2">
+          <div class="d-flex flex-row align-items-start"><img class="rounded-circle"
+                                                              src="{{user.imageUrls}}"
+                                                              width="40"><textarea
+            class="form-control ml-1 shadow-none textarea"></textarea></div>
+          <div class="mt-2 text-right">
+            <button class="btn btn-primary btn-sm shadow-none" type="button">Post comment</button>
+            <button class="btn btn-outline-primary btn-sm ml-1 shadow-none" type="button">Cancel</button>
+          </div>
         </div>
+        <hr>
+        <br>
       </div>
-      <hr>
-      <br>
     </div>
   </div>
-</div>
 
-</body>
-</html>
+  </body>
+  </html>
