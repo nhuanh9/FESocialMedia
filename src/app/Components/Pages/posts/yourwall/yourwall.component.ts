@@ -1,39 +1,41 @@
-import {Component, OnInit} from '@angular/core';
-import {User} from '../../../model/user';
+import { Component, OnInit } from '@angular/core';
+import {Post} from '../../../../model/post';
 import {HttpClient} from '@angular/common/http';
-import {Post} from '../../../model/post';
-import * as firebase from 'firebase';
 import {AngularFireDatabase} from '@angular/fire/database';
-import {Images} from '../../../model/images';
+import {User} from '../../../../model/user';
+import {Images} from '../../../../model/images';
+import * as firebase from 'firebase';
+import {ActivatedRoute} from '@angular/router';
 declare var $: any;
 
 @Component({
-  selector: 'app-post',
-  templateUrl: './post.component.html',
-  styleUrls: ['./post.component.scss']
+  selector: 'app-yourwall',
+  templateUrl: './yourwall.component.html',
+  styleUrls: ['./yourwall.component.scss']
 })
-export class PostComponent implements OnInit {
+export class YourwallComponent implements OnInit {
   listPost: Post[];
   post: Post;
   user: User;
   images: Images;
-  listImages: Images[];
   statusPost: number;
   contentPost: string;
   arrayPicture = '';
-
+  param1: number;
   constructor(private http: HttpClient,
-              private db: AngularFireDatabase,) {
-  }
+              private db: AngularFireDatabase,
+              private route: ActivatedRoute) { }
 
   ngOnInit() {
+    this.param1 = parseInt(this.route.snapshot.paramMap.get('param1'));
+    console.log(this.param1 + '++++++++++++++++++++');
+    this.statusPost = 1;
     this.getAllPost();
     this.getImgUserLogin();
   }
-
   getAllPost() {
     this.user = JSON.parse(localStorage.getItem('currentUser'));
-    const url = 'http://localhost:8080/api/allPost';
+    const url = 'http://localhost:8080/api/allPostByUserId/' + this.user.id;
     this.http.get<Post[]>(url).subscribe((resJson) => {
       this.listPost = resJson;
       console.log('this.listPost');
@@ -41,7 +43,25 @@ export class PostComponent implements OnInit {
       this.listPost.reverse();
     });
   }
-
+  saveImg(value) {
+    const file = value.target.files;
+    const uploadTask = firebase.storage().ref('img/' + Date.now()).put(file[0]);
+    uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED,
+      (snapshot) => {
+        // in progress
+        const snap = snapshot as firebase.storage.UploadTaskSnapshot;
+      },
+      () => {
+        console.log('Error');
+      },
+      () => {
+        uploadTask.snapshot.ref.getDownloadURL().then(downloadURL => {
+          this.arrayPicture = downloadURL;
+          console.log(this.arrayPicture);
+        });
+      }
+    );
+  }
   getImgUserLogin() {
     const url = 'http://localhost:8080/users/' + this.user.id;
     this.http.get<User>(url).subscribe((resJson) => {
@@ -61,7 +81,7 @@ export class PostComponent implements OnInit {
       alert('create lỗi');
     });
   }
-  updatePost(id) {
+  updatePostNoImg(id) {
     this.post = {id: id, createAt: null, notification: null, content: this.contentPost, status: this.statusPost, user: null, postIdShear: null, imgs: this.arrayPicture};
     const url = 'http://localhost:8080/api/editPost/' + this.user.id;
     console.log(this.post);
@@ -83,27 +103,13 @@ export class PostComponent implements OnInit {
     });
   }
 
-  saveImg(value) {
-    const file = value.target.files;
-    const uploadTask = firebase.storage().ref('img/' + Date.now()).put(file[0]);
-    uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED,
-      (snapshot) => {
-        // in progress
-        const snap = snapshot as firebase.storage.UploadTaskSnapshot;
-      },
-      () => {
-        console.log('Error');
-      },
-      () => {
-        uploadTask.snapshot.ref.getDownloadURL().then(downloadURL => {
-          this.arrayPicture = downloadURL;
-          console.log(this.arrayPicture);
-        });
-      }
-    );
-  }
-
-  showUpdatePost = (id) => {
+  showUpdatePost = (id, content, status) => {
+    this.contentPost = content;
+    this.statusPost = status;
     $('#myModal' + id).modal('show');
+  }
+  closeEditPost = () => {
+    this.contentPost = '';
+    this.statusPost = 1;
   }
 }

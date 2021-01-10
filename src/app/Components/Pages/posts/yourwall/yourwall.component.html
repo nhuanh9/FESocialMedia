@@ -1,0 +1,166 @@
+<div class="wrapper">
+  <div class="page-header page-header-xs" data-parallax="true" style="background-image: url('./assets/img/fabio-mangione.jpg');">
+    <div class="filter"></div>
+  </div>
+  <div class="section profile-content">
+    <div class="container">
+      <div class="owner" align="center">
+        <div class="avatar">
+          <img src="{{user.imageUrls}}" alt="Circle Image" class="img-fluid rounded-circle mb-3">
+        </div>
+        <br>
+        <div class="name">
+          <h4 class="title">{{user.username}}<br /></h4>
+        </div>
+      </div>
+      <br/>
+      <div id="band" class="container text-center">
+        <h3>Create Post</h3>
+        <p><em>how do you feel today!</em></p>
+        <div class="bg-light p-2">
+          <div class="d-flex flex-row align-items-start"><img class="rounded-circle"
+                                                              src="{{user.imageUrls}}"
+                                                              width="40" style="margin-top: 20px">
+            <textarea class="form-control ml-1 shadow-none textarea" [(ngModel)]="contentPost"
+                      style="height: 70px"></textarea></div>
+          <div class="row">
+
+            <div class="col col-3 mt-2 text-left">
+              <select id="statusPost" class="form-control select2 select2-hidden-accessible" style="width: 100%;"
+                      tabindex="-1"
+                      aria-hidden="true" [(ngModel)]="statusPost">
+                <option selected="selected" value="1">công khai</option>
+                <option value="0">mình tôi</option>
+
+              </select>
+
+            </div>
+            <div class="col col-4 mt-2 text-right">
+              <div class="form-group">
+                <input type="file" class="form-control" (change)="saveImg($event)">
+              </div>
+
+            </div>
+            <div class="col col-8 mt-2 text-center">
+              <img src="{{arrayPicture}}" width="400">
+            </div>
+          </div>
+          <div class="mt-2 text-center">
+            <button class="btn btn-primary btn-sm shadow-none" type="button" (click)="savePost()">Post</button>
+            <button class="btn btn-outline-primary btn-sm ml-1 shadow-none" type="button">Cancel</button>
+          </div>
+        </div>
+        <br>
+      </div>
+
+      <div *ngFor="let post of listPost" class="d-flex justify-content-center row">
+        <div class="col-md-8">
+          <div class="d-flex flex-column comment-section">
+            <div class="bg-white p-2">
+              <div class="d-flex flex-row user-info">
+                <div>
+                  <img class="rounded-circle" src="{{post.user.imageUrls}}" width="40">
+                </div>
+                <div class="d-flex flex-column justify-content-start ml-2"><span
+                  class="d-block font-weight-bold name">{{post.user.username}}</span>
+                  <div *ngIf="post.status == 1">
+                    <span class="date text-black-50">{{post.createAt}} - công khai</span>
+                  </div>
+                  <div *ngIf="post.status == 0">
+                    <span class="date text-black-50">{{post.createAt}} - mình tôi</span>
+                  </div>
+                </div>
+              </div>
+              <div class="mt-2">
+                <p class="comment-text">{{post.content}}.</p>
+              </div>
+              <div *ngIf="post.imgs.length != 0">
+                <img src="{{post.imgs[0].linkImg}}" alt="Paris" width="550" height="300">
+              </div>
+
+            </div>
+            <div class="bg-white">
+              <div class="d-flex flex-row fs-12">
+                <div class="like p-2 cursor"><i class="fa fa-thumbs-o-up"></i><span class="ml-1">Like</span></div>
+                <div class="like p-2 cursor"><i class="fa fa-commenting-o"></i><span class="ml-1">Comment</span></div>
+                <div class="like p-2 cursor"><i class="fa fa-share"></i><span class="ml-1">Share</span></div>
+
+                <div *ngIf="post.user.id == user.id">
+                  <button type="button" class="btn btn-light" data-toggle="modal" (click)="showUpdatePost(post.id, post.content , post.status)">edit</button>
+
+
+
+                  <!-- Modal -->
+                  <div class="modal fade" id="myModal{{post.id}}" role="dialog">
+                    <div class="modal-dialog modal-lg">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h4 class="modal-title">Edit Post - {{post.user.username}}</h4>
+                          <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+                        </div>
+                        <div class="modal-body">
+                          <textarea class="form-control ml-1 shadow-none textarea" [(ngModel)]="contentPost"  style="height: 70px"></textarea>
+                          <div class="row">
+
+                            <div class="col col-3 mt-2 text-left">
+                              <select class="form-control select2 select2-hidden-accessible" style="width: 100%;"
+                                      tabindex="-1"
+                                      aria-hidden="true" [(ngModel)]="statusPost">
+                                <option value="1">công khai</option>
+                                <option value="0">mình tôi</option>
+
+                              </select>
+
+                            </div>
+                            <div class="col col-4 mt-2 text-right">
+                              <div class="form-group">
+                                <input type="file" class="form-control" (change)="saveImg($event)">
+                              </div>
+
+                            </div>
+                            <div class="col col-8 mt-2 text-center">
+                              <div *ngIf="post.imgs.length != 0 && arrayPicture == ''">
+                                <img src="{{post.imgs[0].linkImg}}" width="400">
+                              </div>
+                              <div *ngIf="arrayPicture != ''">
+                                <img src="{{arrayPicture}}" width="400">
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="modal-footer">
+                          <div *ngIf="post.imgs.length != 0">
+                            <button type="button" class="btn btn-default" (click)="updatePostAndImg(post.id,post.imgs[0].id, post.content)">Update</button>
+                          </div>
+                          <div *ngIf="post.imgs.length == 0">
+                            <button type="button" class="btn btn-default" (click)="updatePostNoImg(post.id, post.content)">Update</button>
+                          </div>
+                          <button type="button" (click)="closeEditPost()" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+            <div class="bg-light p-2">
+              <div class="d-flex flex-row align-items-start"><img class="rounded-circle"
+                                                                  src="{{user.imageUrls}}"
+                                                                  width="40"><textarea
+                class="form-control ml-1 shadow-none textarea"></textarea></div>
+              <div class="mt-2 text-right">
+                <button class="btn btn-primary btn-sm shadow-none" type="button">Post comment</button>
+                <button class="btn btn-outline-primary btn-sm ml-1 shadow-none" type="button">Cancel</button>
+              </div>
+            </div>
+            <hr>
+            <br>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

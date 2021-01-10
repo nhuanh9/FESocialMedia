@@ -6,8 +6,10 @@ import {LoginComponent} from './Components/Pages/users/login/login.component';
 import {AuthGuard} from './helper/auth-guard';
 import {AllFriendComponent} from './Components/Pages/friend/all-friend/all-friend.component';
 import {GeneralFriendsComponent} from './Components/Pages/friend/general-friends/general-friends.component';
-import {PostComponent} from './Components/Pages/post/post.component';
+import {PostComponent} from './Components/Pages/posts/post/post.component';
 import {TestComponent} from './test/test.component';
+import {YourwallComponent} from './Components/Pages/posts/yourwall/yourwall.component';
+import {FriendswallComponent} from './Components/Pages/posts/friendswall/friendswall.component';
 
 
 const routes: Routes = [
@@ -28,8 +30,12 @@ const routes: Routes = [
     component: PostComponent
   },
   {
-    path: 'test',
-    component: TestComponent
+    path: 'yourwall',
+    component: YourwallComponent
+  },
+  {
+    path: 'friendswall',
+    component: FriendswallComponent
   },
   {
     path: 'generalfriend',

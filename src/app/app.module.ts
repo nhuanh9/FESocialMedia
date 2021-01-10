@@ -20,8 +20,10 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { NewPasswordComponent } from './Components/Pages/users/new-password/new-password.component';
 import { AllFriendComponent } from './Components/Pages/friend/all-friend/all-friend.component';
 import { GeneralFriendsComponent } from './Components/Pages/friend/general-friends/general-friends.component';
-import { PostComponent } from './Components/Pages/post/post.component';
+import { PostComponent } from './Components/Pages/posts/post/post.component';
 import { TestComponent } from './test/test.component';
+import { FriendswallComponent } from './Components/Pages/posts/friendswall/friendswall.component';
+import { YourwallComponent } from './Components/Pages/posts/yourwall/yourwall.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +38,9 @@ import { TestComponent } from './test/test.component';
     AllFriendComponent,
     GeneralFriendsComponent,
     PostComponent,
-    TestComponent
+    TestComponent,
+    FriendswallComponent,
+    YourwallComponent
   ],
   imports: [
     BrowserModule,
