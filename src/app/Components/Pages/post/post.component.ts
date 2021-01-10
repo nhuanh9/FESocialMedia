@@ -8,10 +8,12 @@ import {Images} from '../../../model/images';
 import {PostLikeService} from "../../../Services/post-like.service";
 import {UserService} from "../../../Services/user.service";
 import {ActivatedRoute, ParamMap, Router} from "@angular/router";
-import {FormBuilder} from "@angular/forms";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Subscription} from "rxjs";
 import {LikePost} from "../../../model/like-post";
 import {CurrentUserLikePost} from "../../../model/CurrentUserLikePost";
+import {Comments} from "../../../model/comments";
+import {PostService} from "../../../Services/post.service";
 
 declare var $: any;
 
@@ -32,6 +34,9 @@ export class PostComponent implements OnInit {
   sub: Subscription;
   listLikePost: LikePost[];
   allLike: LikePost[];
+  comments: Comments[];
+  commentForm: FormGroup;
+  comment: Comments;
 
   constructor(private http: HttpClient,
               private db: AngularFireDatabase,
@@ -39,12 +44,20 @@ export class PostComponent implements OnInit {
               private userService: UserService,
               private router: Router,
               private fb: FormBuilder,
-              private activatedRoute: ActivatedRoute,) {
+              private activatedRoute: ActivatedRoute,
+              private postService: PostService) {
   }
 
   ngOnInit() {
     this.getAllPost();
     this.getImgUserLogin();
+    this.prepareFormComment();
+  }
+
+  prepareFormComment() {
+    this.commentForm = this.fb.group({
+      comment: ['', [Validators.required]]
+    });
   }
 
   getAllPost() {
@@ -226,4 +239,19 @@ export class PostComponent implements OnInit {
 
   }
 
+  addComment(id) {
+    const url1 = 'http://localhost:8080/users/' + this.user.id;
+    this.http.get<User>(url1).subscribe((result) => {
+      this.comment = {
+        comment: this.commentForm.get('comment').value,
+        user: result,
+      };
+      this.postService.addComment(id, this.comment).subscribe(
+        ()=>{
+          this.getAllPost();
+          this.prepareFormComment();
+        }
+      )
+    });
+  }
 }

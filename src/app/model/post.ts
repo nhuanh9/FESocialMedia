@@ -11,4 +11,5 @@ export interface Post {
   postIdShear?: number;
   imgs?: string;
   likes?: number;
+  listComment?: any;
 }
