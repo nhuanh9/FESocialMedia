@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Post} from '../../../../model/post';
 import {HttpClient} from '@angular/common/http';
 import {AngularFireDatabase} from '@angular/fire/database';
@@ -6,6 +6,7 @@ import {User} from '../../../../model/user';
 import {Images} from '../../../../model/images';
 import * as firebase from 'firebase';
 import {ActivatedRoute} from '@angular/router';
+
 declare var $: any;
 
 @Component({
@@ -22,9 +23,11 @@ export class YourwallComponent implements OnInit {
   contentPost: string;
   arrayPicture = '';
   param1: number;
+
   constructor(private http: HttpClient,
               private db: AngularFireDatabase,
-              private route: ActivatedRoute) { }
+              private route: ActivatedRoute) {
+  }
 
   ngOnInit() {
     this.param1 = parseInt(this.route.snapshot.paramMap.get('param1'));
@@ -33,6 +36,7 @@ export class YourwallComponent implements OnInit {
     this.getAllPost();
     this.getImgUserLogin();
   }
+
   getAllPost() {
     this.user = JSON.parse(localStorage.getItem('currentUser'));
     const url = 'http://localhost:8080/api/allPostByUserId/' + this.user.id;
@@ -43,6 +47,7 @@ export class YourwallComponent implements OnInit {
       this.listPost.reverse();
     });
   }
+
   saveImg(value) {
     const file = value.target.files;
     const uploadTask = firebase.storage().ref('img/' + Date.now()).put(file[0]);
@@ -62,6 +67,7 @@ export class YourwallComponent implements OnInit {
       }
     );
   }
+
   getImgUserLogin() {
     const url = 'http://localhost:8080/users/' + this.user.id;
     this.http.get<User>(url).subscribe((resJson) => {
@@ -81,6 +87,7 @@ export class YourwallComponent implements OnInit {
       alert('create lỗi');
     });
   }
+
   updatePostNoImg(id) {
     this.post = {id: id, createAt: null, notification: null, content: this.contentPost, status: this.statusPost, user: null, postIdShear: null, imgs: this.arrayPicture};
     const url = 'http://localhost:8080/api/editPost/' + this.user.id;
@@ -92,7 +99,19 @@ export class YourwallComponent implements OnInit {
     });
   }
 
-  updatePostAndImg(idPost, idImg) {
+  deletePost(id) {
+    const url = 'http://localhost:8080/api/deletePost/' + id;
+    this.http.post(url, id).subscribe((resJson) => {
+      alert('remote thành công');
+    }, error => {
+      alert('remote lỗi');
+    });
+  }
+
+  updatePostAndImg(idPost, idImg, linkImg) {
+    if (this.arrayPicture === '') {
+      this.arrayPicture = linkImg;
+    }
     this.post = {id: idPost, createAt: null, notification: null, content: this.contentPost, status: this.statusPost, user: null, postIdShear: null, imgs: this.arrayPicture};
     const url = 'http://localhost:8080/api/editPostAndImg/' + idImg;
     console.log(idImg);
@@ -107,9 +126,9 @@ export class YourwallComponent implements OnInit {
     this.contentPost = content;
     this.statusPost = status;
     $('#myModal' + id).modal('show');
-  }
+  };
   closeEditPost = () => {
     this.contentPost = '';
     this.statusPost = 1;
-  }
+  };
 }

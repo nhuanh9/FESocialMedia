@@ -6,6 +6,7 @@ import * as firebase from 'firebase';
 import {AngularFireDatabase} from '@angular/fire/database';
 import {Images} from '../../../../model/images';
 import {Router} from '@angular/router';
+
 declare var $: any;
 
 @Component({
@@ -32,10 +33,12 @@ export class PostComponent implements OnInit {
     this.getAllPost();
     this.getImgUserLogin();
   }
+
   setIdUserPost(id) {
     localStorage.setItem('idUserPost', id);
     this.router.navigate(['/friendswall']);
   }
+
   getAllPost() {
     this.user = JSON.parse(localStorage.getItem('currentUser'));
     const url = 'http://localhost:8080/api/allPost';
@@ -44,6 +47,7 @@ export class PostComponent implements OnInit {
       console.log('this.listPost');
       console.log(this.listPost);
       this.listPost.reverse();
+      this.getPostShare();
     });
   }
 
@@ -56,6 +60,19 @@ export class PostComponent implements OnInit {
     });
   }
 
+  getPostShare() {
+    for (let i = 0; i < this.listPost.length; i++) {
+      if (this.listPost[i].postIdShear != null) {
+        const url = 'http://localhost:8080/api/findPostById/' + this.listPost[i].postIdShear;
+        this.http.get<Post>(url).subscribe((resJson) => {
+          this.listPost[i].post = resJson;
+          console.log('ppppppppppppppppppppp');
+          console.log(this.listPost[i].post);
+        });
+      }
+    }
+  }
+
   savePost() {
     this.post = {id: null, createAt: null, notification: null, content: this.contentPost, status: this.statusPost, user: null, postIdShear: null, imgs: this.arrayPicture};
     const url = 'http://localhost:8080/api/addPost/' + this.user.id;
@@ -66,6 +83,7 @@ export class PostComponent implements OnInit {
       alert('create lỗi');
     });
   }
+
   updatePostNoImg(id) {
     this.post = {id: id, createAt: null, notification: null, content: this.contentPost, status: this.statusPost, user: null, postIdShear: null, imgs: this.arrayPicture};
     const url = 'http://localhost:8080/api/editPost/' + this.user.id;
@@ -76,6 +94,7 @@ export class PostComponent implements OnInit {
       alert('edit lỗi');
     });
   }
+
   deletePost(id) {
     const url = 'http://localhost:8080/api/deletePost/' + id;
     this.http.post(url, id).subscribe((resJson) => {
@@ -84,10 +103,22 @@ export class PostComponent implements OnInit {
       alert('remote lỗi');
     });
   }
-    sharePost(id) {
-    }
 
-  updatePostAndImg(idPost, idImg) {
+  sharePost(id) {
+    this.post = {id: null, createAt: null, notification: null, content: this.contentPost, status: this.statusPost, user: null, postIdShear: id, imgs: this.arrayPicture};
+    const url = 'http://localhost:8080/api/addPost/' + this.user.id;
+    console.log(this.post);
+    this.http.post(url, this.post).subscribe((resJson) => {
+      alert('create thành công');
+    }, error => {
+      alert('create lỗi');
+    });
+  }
+
+  updatePostAndImg(idPost, idImg, linkImg) {
+    if (this.arrayPicture === '') {
+      this.arrayPicture = linkImg;
+    }
     this.post = {id: idPost, createAt: null, notification: null, content: this.contentPost, status: this.statusPost, user: null, postIdShear: null, imgs: this.arrayPicture};
     const url = 'http://localhost:8080/api/editPostAndImg/' + idImg;
     console.log(idImg);
@@ -122,13 +153,13 @@ export class PostComponent implements OnInit {
     this.contentPost = content;
     this.statusPost = status;
     $('#myModal' + id).modal('show');
-  }
+  };
   showSharePost = (id) => {
     $('#modalShare' + id).modal('show');
-  }
+  };
   closeEditPost = () => {
     this.contentPost = '';
     this.statusPost = 1;
     this.arrayPicture = null;
-  }
+  };
 }

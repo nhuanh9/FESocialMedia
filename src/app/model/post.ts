@@ -10,4 +10,5 @@ export interface Post {
   user?: User;
   postIdShear?: number;
   imgs?: string;
+  post?: Post;
 }

@@ -24,6 +24,7 @@ import { PostComponent } from './Components/Pages/posts/post/post.component';
 import { TestComponent } from './test/test.component';
 import { FriendswallComponent } from './Components/Pages/posts/friendswall/friendswall.component';
 import { YourwallComponent } from './Components/Pages/posts/yourwall/yourwall.component';
+import { WebsocketComponent } from './websocket/websocket.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { YourwallComponent } from './Components/Pages/posts/yourwall/yourwall.co
     PostComponent,
     TestComponent,
     FriendswallComponent,
-    YourwallComponent
+    YourwallComponent,
+    WebsocketComponent
   ],
   imports: [
     BrowserModule,

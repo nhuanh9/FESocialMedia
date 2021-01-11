@@ -131,11 +131,13 @@
                         </div>
                         <div class="modal-footer">
                           <div *ngIf="post.imgs.length != 0">
-                            <button type="button" class="btn btn-default" (click)="updatePostAndImg(post.id,post.imgs[0].id, post.content)">Update</button>
+                            <button type="button" class="btn btn-default" (click)="updatePostAndImg(post.id,post.imgs[0].id, post.imgs[0].linkImg)">Update</button>
                           </div>
                           <div *ngIf="post.imgs.length == 0">
-                            <button type="button" class="btn btn-default" (click)="updatePostNoImg(post.id, post.content)">Update</button>
+                            <button type="button" class="btn btn-default" (click)="updatePostNoImg(post.id)">Update</button>
                           </div>
+                          <button type="button" class="btn btn-default" (click)="deletePost(post.id)">Remove</button>
+
                           <button type="button" (click)="closeEditPost()" class="btn btn-default" data-dismiss="modal">Close</button>
                         </div>
                       </div>
