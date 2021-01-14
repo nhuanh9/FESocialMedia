@@ -2,6 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {Stomp} from '@stomp/stompjs';
 import {log} from 'util';
 import {User} from '../model/user';
+import {Post} from '../model/post';
+import {HttpClient} from '@angular/common/http';
 
 @Component({
   selector: 'app-websocket',
@@ -9,6 +11,7 @@ import {User} from '../model/user';
   styleUrls: ['./websocket.component.scss']
 })
 export class WebsocketComponent implements OnInit {
+  idRomChat: number;
   title = 'grokonez';
   description = 'Angular-WebSocket Demo';
   user: User;
@@ -18,7 +21,7 @@ export class WebsocketComponent implements OnInit {
   message: string;
   private stompClient = null;
 
-  constructor() {
+  constructor(private http: HttpClient) {
   }
 
   setConnected(connected: boolean) {
@@ -43,21 +46,37 @@ export class WebsocketComponent implements OnInit {
   //     });
   //   });
   // }
-  connect(username, userNameFriend) {
-    userNameFriend = 'johntoan';
+  async connect(username, userNameFriend, idRomChat, name, message) {
+
+    userNameFriend = 'tuyet';
+    username = 'toan';
+
+    const id = await this.getRomChat(username, userNameFriend);
+    idRomChat = this.idRomChat;
+    name = 'toan';
+    message = this.message;
+
     const socket = new WebSocket('ws://localhost:8080/gkz-stomp-endpoint/websocket');
     this.stompClient = Stomp.over(socket);
     const thisSocket = this;
     this.stompClient.connect({}, function(frame) {
       thisSocket.setConnected(true);
-      console.log('Connected: -----');
-      console.log('Connected: ' + frame);
-
-      thisSocket.stompClient.subscribe('/topic/public/' + username + '/' + userNameFriend);
+      thisSocket.stompClient.subscribe('/topic/public/' + idRomChat, function(hello) {
+        thisSocket.showGreeting(hello.body);
+      });
       thisSocket.stompClient.send('/gkz/chatVsUser', {},
-        JSON.stringify({'name': this.name, 'message': this.message, 'userNameFriend': userNameFriend}));
+        JSON.stringify({'name': name, 'message': message, 'userNameFriend': userNameFriend}));
 
     });
+  }
+
+  async getRomChat(userName1, userName2) {
+    const url = 'http://localhost:8080/api/findRomChat/' + userName1 + '/' + userName2;
+    this.idRomChat = await this.http.get<number>(url).toPromise();
+    console.log('-----------------------------');
+    console.log(this.idRomChat);
+    console.log('-----------------------------');
+
   }
 
   disconnect() {
