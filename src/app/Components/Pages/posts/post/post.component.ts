@@ -29,6 +29,7 @@ export class PostComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.user = JSON.parse(localStorage.getItem('currentUser'));
     this.statusPost = 1;
     this.getAllPost();
     this.getImgUserLogin();
@@ -40,7 +41,6 @@ export class PostComponent implements OnInit {
   }
 
   getAllPost() {
-    this.user = JSON.parse(localStorage.getItem('currentUser'));
     const url = 'http://localhost:8080/api/allPost';
     this.http.get<Post[]>(url).subscribe((resJson) => {
       this.listPost = resJson;

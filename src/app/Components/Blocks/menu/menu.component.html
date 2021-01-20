@@ -20,7 +20,7 @@
     <form class="form-inline mr-2">
       <!--    <form class="form-inline mr-2" formGroup="search" (ngSubmit)="search()">-->
       <!--      <input type="text" class="form-control " formControlName="addressSearch" style="color: black !important;">-->
-      <input type="text" [(ngModel)]="content" class="form-control " style="color: black !important;">
+      <input type="text" name="content" [(ngModel)]="content" class="form-control " style="color: black !important;">
       <button type="submit" class="btn btn-outline-light " (click)="search()"><i class="fas fa-search"></i></button>
       <ul class="list-group" id="myList" *ngFor="let post of listPost">
         <li class="list-group-item"><a>{{post.user.username}}-{{post.createAt}}</a></li>

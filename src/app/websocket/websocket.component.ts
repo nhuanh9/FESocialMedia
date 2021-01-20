@@ -4,6 +4,9 @@ import {log} from 'util';
 import {User} from '../model/user';
 import {Post} from '../model/post';
 import {HttpClient} from '@angular/common/http';
+import {Messenger} from '../model/messenger';
+
+declare var $: any;
 
 @Component({
   selector: 'app-websocket',
@@ -15,22 +18,19 @@ export class WebsocketComponent implements OnInit {
   title = 'grokonez';
   description = 'Angular-WebSocket Demo';
   user: User;
+  userNameFriend = 'johntoan98';
   greetings: string[] = [];
   disabled = true;
   name: string;
-  message: string;
+  message = '';
   private stompClient = null;
+  listUserFriend: User[];
+  listMessenger: Messenger[];
+
 
   constructor(private http: HttpClient) {
   }
 
-  setConnected(connected: boolean) {
-    this.disabled = !connected;
-
-    if (connected) {
-      this.greetings = [];
-    }
-  }
 
   // connect() {
   //   const socket = new WebSocket('ws://localhost:8080/gkz-stomp-endpoint/websocket');
@@ -46,27 +46,66 @@ export class WebsocketComponent implements OnInit {
   //     });
   //   });
   // }
-  async connect(username, userNameFriend, idRomChat, name, message) {
+  setConnected(connected: boolean) {
+    this.disabled = !connected;
 
-    userNameFriend = 'tuyet';
-    username = 'toan';
+    if (connected) {
+      this.greetings = [];
+    }
+  }
 
-    const id = await this.getRomChat(username, userNameFriend);
-    idRomChat = this.idRomChat;
-    name = 'toan';
-    message = this.message;
+  async showChatModal(id, userNameFriend) {
+    const idRom = await this.connect(userNameFriend);
+    const mess = await this.getAllMessengerByIdRom();
+    $('#modalChat' + id).modal('show');
+
+  };
+
+  test() {
+    console.log(this.userNameFriend);
+    this.userNameFriend = 'johntoan982';
+    console.log(this.userNameFriend);
+  }
+
+  async connect(userNameFriend) {
+
+    let username = this.user.username;
+    const createRom = await this.createRomChat(username, userNameFriend);
+    const getRom = await this.getRomChat(username, userNameFriend);
+    let idRomChat = this.idRomChat;
+    let message = this.message;
 
     const socket = new WebSocket('ws://localhost:8080/gkz-stomp-endpoint/websocket');
     this.stompClient = Stomp.over(socket);
     const thisSocket = this;
+
     this.stompClient.connect({}, function(frame) {
       thisSocket.setConnected(true);
+      // thisSocket.stompClient.subscribe('/topic/public/' + idRomChat, function(hello) {
+      //   thisSocket.showGreeting(hello.body);
+      // });
       thisSocket.stompClient.subscribe('/topic/public/' + idRomChat, function(hello) {
-        thisSocket.showGreeting(hello.body);
+        thisSocket.showGreeting();
       });
       thisSocket.stompClient.send('/gkz/chatVsUser', {},
-        JSON.stringify({'name': name, 'message': message, 'userNameFriend': userNameFriend}));
+        JSON.stringify({'name': username, 'userNameFriend': userNameFriend}));
 
+    });
+  }
+
+  getAllMessengerByIdRom() {
+    const url = 'http://localhost:8080/api/allChat/' + this.idRomChat;
+    this.http.get<Messenger[]>(url).subscribe((resJson) => {
+      this.listMessenger = resJson;
+      console.log(this.listMessenger);
+    });
+  }
+
+  getAllFriend() {
+    const url = 'http://localhost:8080/api/allFriendById/' + this.user.id;
+    this.http.get<User[]>(url).subscribe((resJson) => {
+      this.listUserFriend = resJson;
+      console.log(this.listUserFriend);
     });
   }
 
@@ -77,6 +116,13 @@ export class WebsocketComponent implements OnInit {
     console.log(this.idRomChat);
     console.log('-----------------------------');
 
+  }
+
+  createRomChat(userName1, userName2) {
+    const url = 'http://localhost:8080/api/addRomchat/' + userName1 + '/' + userName2;
+    this.http.get(url).subscribe((resJson) => {
+        console.log('tạo phòng oke');
+    });
   }
 
   disconnect() {
@@ -96,15 +142,15 @@ export class WebsocketComponent implements OnInit {
       {},
       JSON.stringify({'name': this.user.username, 'message': this.message})
     );
+    this.message = '';
   }
 
-  showGreeting(message) {
-    this.greetings.push(message);
+  showGreeting() {
+    this.getAllMessengerByIdRom();
   }
 
   ngOnInit(): void {
     this.user = JSON.parse(localStorage.getItem('currentUser'));
-    console.log(this.user);
-    console.log(this.user.username);
+    this.getAllFriend();
   }
 }
